@@ -1,0 +1,3 @@
+<p>Facilitates communication and collaboration between users and support agents.</p>
+<p>Users can add comments, ask for updates, or provide additional information within the ticket thread.</p>
+<p>Support agents can collaborate internally, share insights, and seek assistance from colleagues.</p>

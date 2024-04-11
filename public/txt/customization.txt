@@ -1,0 +1,3 @@
+<p>Customize the ticketing system to align with specific workflows, branding, and requirements.</p>
+<p>Create custom views and dashboards to display relevent ticket data and metrics based on specific needs.</p>
+<p>Customize notifications and email templates to communicate with users throughout the support process.</p>

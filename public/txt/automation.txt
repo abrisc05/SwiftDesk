@@ -1,0 +1,3 @@
+<p>Rules can be configured to monitor the status and age of tickets and escalate priority levels if needed.<p>
+<p>Enforce Service Level Agreements (SLAs) by tracking response and resolution times for tickets.</p>
+<p>Allows organizations to setup time-based triggers to initiate specific actions or reminders at pre-defined intervals.<p>

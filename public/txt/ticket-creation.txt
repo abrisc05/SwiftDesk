@@ -1,0 +1,3 @@
+<p>Users create tickets with details regading their issue<p>
+<p>Tickets are catergorized based on the type of request or affected product or service<p>
+<p>Tickets are manually or automatically assigned to appropriate support agents or team<p>

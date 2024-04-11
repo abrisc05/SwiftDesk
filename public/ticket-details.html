@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ticket Details</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <style>
+        #deleteTicketBtn {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <h1>Ticket Details</h1>
+    <div id="ticketDetails">
+    </div>
+
+    <button type="button" onclick="openForm()">Update Ticket</button>
+
+    <form id="updateTicketForm" style="display: none;">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name">
+        <label for="email">Email:</label>
+        <input type="email" id="email2" name="email">
+        <label for="phone">Phone:</label>
+        <input type="tel" id="phonenumber" name="phone">
+        <label for="subject">Subject:</label>
+        <input type="text" id="subject" name="subject">
+        <label for="status">Status:</label>
+        <input type="text" id="status" name="status">
+        <label for="assigned_to">Assigned To:</label>
+        <input type="text" id="assigned_to" name="assigned_to">
+        <label for="message">Message:</label>
+        <textarea id="tixmessage" name="message"></textarea>
+        <button type="submit">Update Ticket</button>
+    </form>
+
+
+    <button id="closeTicketBtn">Close Ticket</button>
+    <a href="dashboard.html">
+        <button class="dashboardBtn">Return to Dashboard</button>
+    </a>
+    <button id="deleteTicketBtn" style="display: none">Delete Ticket</button>
+
+    <script>
+        function openForm() {
+            updateTicketForm.style.display = updateTicketForm.style.display == "block" ? "none" : "block";
+          }
+
+        async function fetchTicketDetails() {
+            // Get the ticket ID from the URL parameters
+            const urlParams = new URLSearchParams(window.location.search);
+            const ticketId = urlParams.get('id');
+
+            // Fetch ticket details from API
+            const response = await fetch(`/api/tickets/${ticketId}`);
+            const ticket = await response.json();
+
+
+            // Display ticket details
+            const ticketDetailsDiv = document.getElementById('ticketDetails');
+            ticketDetailsDiv.innerHTML = `
+                <p><strong>ID:</strong> ${ticket.id}</p>
+                <p><strong>Name:</strong> ${ticket.name}</p>
+                <p><strong>Email:</strong> ${ticket.email2}</p>
+                <p><strong>Phone:</strong> ${ticket.phonenumber}</p>
+                <p><strong>Subject:</strong> ${ticket.subject}</p>
+                <p><strong>Status:</strong> ${ticket.status}</p>
+                <p><strong>Assigned To:</strong> ${ticket.assigned_to}</p>
+                <p><strong>Message:</strong> ${ticket.tixmessage}</p>
+            `;
+
+             // Pre-fill update form fields
+             document.getElementById('name').value = ticket.name;
+             document.getElementById('email2').value = ticket.email2;
+             document.getElementById('phonenumber').value = ticket.phonenumber;
+             document.getElementById('subject').value = ticket.subject;
+             document.getElementById('status').value = ticket.status;
+             document.getElementById('assigned_to').value = ticket.assigned_to;
+             document.getElementById('tixmessage').value = ticket.tixmessage;
+             
+             // Display delete button if ticket is closed
+            if (ticket.status === 'Closed') {
+                document.getElementById('deleteTicketBtn').style.display = 'block';
+            }
+        }
+
+    
+
+        // Call fetchTicketDetails function when the page loads
+        fetchTicketDetails();
+
+        // Add event listener to update ticket form submission
+        document.getElementById('updateTicketForm').addEventListener('submit', async function(event) {
+            event.preventDefault();
+
+            const name = document.getElementById('name').value;
+            const email2 = document.getElementById('email2').value;
+            const phonenumber = document.getElementById('phonenumber').value;
+            const subject = document.getElementById('subject').value;
+            const status = document.getElementById('status').value;
+            const assigned_to = document.getElementById('assigned_to').value;
+            const tixmessage = document.getElementById('tixmessage').value;
+
+            const urlParams = new URLSearchParams(window.location.search);
+            const ticketId = urlParams.get('id');
+
+            const updateData = {};
+           
+            if (name.trim() !== '') updateData.name = name;
+            if (email2.trim() !== '') updateData.email2 = email2;
+            if (phonenumber.trim() !== '') updateData.phonenumber = phonenumber;
+            if (subject.trim() !== '') updateData.subject = subject;
+            if (status.trim() !== '') updateData.status = status;
+            if (assigned_to.trim() !== '') updateData.assigned_to = assigned_to;
+            if (tixmessage.trim() !== '') updateData.tixmessage = tixmessage;
+
+            const response = await fetch(`/api/tickets/${ticketId}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    name,
+                    email2,
+                    phonenumber,
+                    subject,
+                    status,
+                    assigned_to,
+                    tixmessage
+                })
+            });
+
+            if (response.ok) {
+                alert('Ticket updated successfully.');
+                // Reload the page to reflect the updated ticket details
+                window.location.reload();
+            } else {
+                console.error('Failed to update ticket');
+            }
+        });
+
+        // Display delete button if ticket is closed
+        if (status === 'Closed') {
+            document.getElementById('deleteTicketBtn').style.display = 'block';
+        }
+    
+
+
+
+        // Add event listener to close ticket button
+        document.getElementById('closeTicketBtn').addEventListener('click', async function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const ticketId = urlParams.get('id');
+
+            const response = await fetch(`/api/tickets/${ticketId}/close`, {
+                method: 'PATCH'
+            });
+
+            if (response.ok) {
+                alert('Ticket closed successfully.');
+                // Reload the page to reflect the updated ticket status
+                window.location.reload();
+            } else {
+                console.error('Failed to close ticket');
+            }
+        });
+
+        // Add event listener to delete ticket button
+    document.getElementById('deleteTicketBtn').addEventListener('click', async function() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const ticketId = urlParams.get('id');
+
+    const confirmed = confirm('Are you sure you want to delete this ticket?');
+    if (!confirmed) return; // Do nothing if the user cancels deletion
+
+    const response = await fetch(`/api/tickets/${ticketId}`, {
+        method: 'DELETE'
+    });
+
+    if (response.ok) {
+        alert('Ticket deleted successfully.');
+        // Redirect the user to the dashboard or any other appropriate page
+        window.location.href = 'dashboard.html';
+    } else {
+        console.error('Failed to delete ticket');
+    }
+});
+
+</script>
+</body>
+</html>

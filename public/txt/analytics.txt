@@ -1,0 +1,3 @@
+<p>Generates reports and analytics to track key performance indicators (KPIs)<p>
+<p>Tracks ticket volume, resolution times, customer satisfaction scores and agent productivity</p>
+<p>Helps in identifying trends, optimizing processes, and making data-driven decisions to improve support operations.</p>
