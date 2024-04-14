@@ -10,7 +10,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 
 const pool = new Pool ({
    user: 'postgres',
-   host: 'swiftdesk-db.cvmwieseujq4.us-east-2.rds.amazonaws.com',
+   host: 'swiftdeskdb.cvmwieseujq4.us-east-2.rds.amazonaws.com',
    database: 'postgres',
    password: 'postgres',
    port: 5432,
