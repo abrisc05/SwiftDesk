@@ -1,7 +1,7 @@
 const express = require("express");
 const bodyParser = require("body-parser")
 const Pool = require('pg').Pool
-const app = express()
+const app = express();
 require('dotenv').config();
 
 app.use(express.static('public'));
@@ -18,7 +18,7 @@ const pool = new Pool({
     ssl: {
         rejectUnauthorized: false
     }
-})
+});
 
 
 // Middleware
@@ -59,12 +59,10 @@ app.get("/api/users", (req, res) => {
 });
 
 
-
-
 app.post("/api/users/create", (req, res) => {
    
    const email = req.body.email;
-   const username = req.body.username; 
+   const username = req.body.username;
    const password = req.body.password;
 
    const sql = "INSERT INTO users (email, username, password) VALUES ($1, $2, $3)";
@@ -75,7 +73,6 @@ app.post("/api/users/create", (req, res) => {
  
    })
 });
-
 
 
 // Endpoint to retrieve a single ticket by ID
@@ -97,8 +94,6 @@ app.get('/api/tickets/:id', (req, res) => {
   });
 });
 
-
-
 // Endpoint to retrieve all tickets
 app.get('/api/tickets', (req, res) => {
   pool.query('SELECT * FROM tickets ORDER BY id ASC', (error, results) => {
@@ -111,6 +106,7 @@ app.get('/api/tickets', (req, res) => {
       res.status(200).json(results.rows);
   });
 });
+
 app.post("/api/tickets/create", (req, res) => {
    
    const subject = req.body.subject;
@@ -130,9 +126,6 @@ app.post("/api/tickets/create", (req, res) => {
  
    })
 });
-
-
-
 
 // Routes
 app.get('/api/tickets', (req, res) => {
