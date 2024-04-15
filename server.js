@@ -10,11 +10,22 @@ app.use(bodyParser.urlencoded({extended: true}));
 
 const pool = new Pool ({
    user: 'postgres',
-   host: 'postgres.cvmwieseujq4.us-east-2.rds.amazonaws.com',
+   host: 'localhost',
    database: 'postgres',
-   password: 'postgres',
+   password: '296502',
    port: 5432,
 })
+
+const client = new pg.Client({
+    user: 'postgres',
+    host: '172.31.12.126',
+    database: 'postgres',
+    password: 'postgres',
+    port: 5432,
+    ssl: true
+
+});
+client.connect();
 
 // Middleware
 app.use(bodyParser.json());
