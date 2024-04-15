@@ -10,11 +10,11 @@ app.use(bodyParser.urlencoded({extended: true}));
 
 const pool = new Pool ({
    user: 'postgres',
-   host: 'swiftdeskdb.cvmwieseujq4.us-east-2.rds.amazonaws.com',
+   host: 'localhost',
    database: 'postgres',
-   password: 'postgres',
+   password: '296502',
    port: 5432,
-});
+})
 
 // Middleware
 app.use(bodyParser.json());
