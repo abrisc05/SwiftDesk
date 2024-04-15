@@ -10,14 +10,11 @@ app.use(bodyParser.urlencoded({extended: true}));
 const PORT = process.env.PORT || 3000;
 
 const pool = new Pool({
-    user: process.env.DB_USER,
-    host: process.env.DB_HOST,
-    database: process.env.DB_DATABASE,
-    password: process.env.DB_PASSWORD,
-    port: 5432,
-    ssl: {
-        rejectUnauthorized: false
-    }
+    user: 'postgres',
+    host: 'localhost',
+    database: 'postgres',
+    password: '296502',
+    port: 5432
 });
 
 
