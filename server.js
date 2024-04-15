@@ -9,23 +9,22 @@ app.use(express.static('public'));
 app.use(bodyParser.urlencoded({extended: true}));
 
 const pool = new Pool ({
-   user: 'postgres',
-   host: 'localhost',
-   database: 'postgres',
-   password: '296502',
-   port: 5432,
+  user: 'postgres',
+  host: 'localhost',
+  database: 'postgres',
+  password: '296502',
+  port: 5432,
 })
 
-const client = new pg.Client({
+const client = new Pool({
     user: 'postgres',
-    host: 'postgres.cvmwieseujq4.us-east-2.rds.amazonaws.com',
+    host: 'ip-172-31-12-126.us-east-2.compute.internal',
     database: 'postgres',
     password: 'postgres',
     port: 5432,
-    ssl: true
+    ssl: true,
 
-});
-client.connect();
+})
 
 // Middleware
 app.use(bodyParser.json());
