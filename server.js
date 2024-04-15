@@ -1,7 +1,11 @@
 const express = require("express");
 const bodyParser = require("body-parser")
 const Pool = require('pg').Pool
+const app = express()
 require('dotenv').config();
+
+app.use(express.static('public'));
+app.use(bodyParser.urlencoded({extended: true}));
 
 const PORT = process.env.PORT || 3000;
 
@@ -16,10 +20,6 @@ const pool = new Pool({
     }
 })
 
-const app = express();
-
-app.use(express.static('public'));
-app.use(bodyParser.urlencoded({extended: true}));
 
 // Middleware
 app.use(bodyParser.json());
@@ -46,8 +46,6 @@ app.post('/api/tickets', async (req, res) => {
     res.status(500).json({ error: 'Internal Server Error' });
   }
 });
-
-
 
 
 app.get("/api/users", (req, res) => {
@@ -168,7 +166,6 @@ app.delete('/api/tickets/:id', async (req, res) => {
   }
 });
 
-
 // PUT route to update a ticket by ID
 app.put('/api/tickets/:id', async (req, res) => {
   const ticketId = req.params.id;
@@ -196,7 +193,6 @@ app.patch('/api/tickets/:id/close', async (req, res) => {
     res.status(500).json({ error: 'Internal Server Error' });
   }
 });
-
 
 app.listen(3000, () => {
    console.log("Listening on port 3000");
