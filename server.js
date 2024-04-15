@@ -1,19 +1,25 @@
 const express = require("express");
-const bodyParser = require("body-parser");
-const Pool = require('pg').Pool;
+const bodyParser = require("body-parser")
+const Pool = require('pg').Pool
+require('dotenv').config();
+
+const PORT = process.env.PORT || 3000;
+
+const pool = new Pool({
+    user: process.env.DB_USER,
+    host: process.env.DB_HOST,
+    database: process.env.DB_DATABASE,
+    password: process.env.DB_PASSWORD,
+    port: 5432,
+    ssl: {
+        rejectUnauthorized: false
+    }
+})
+
 const app = express();
 
 app.use(express.static('public'));
 app.use(bodyParser.urlencoded({extended: true}));
-
-const pool = new Pool ({
-  user: 'postgres',
-  host: 'localhost',
-  database: 'postgres',
-  password: '296502',
-  port: 5432,
-})
-
 
 // Middleware
 app.use(bodyParser.json());
