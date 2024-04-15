@@ -9,16 +9,6 @@
             "database": "postgres",
             "username": "postgres",
             "password": "296502"
-        },
-        {
-            "previewLimit": 50,
-            "server": "swiftdeskdb.cvmwieseujq4.us-east-2.rds.amazonaws.com",
-            "port": 5432,
-            "askForPassword": true,
-            "driver": "PostgreSQL",
-            "name": "AWS-swiftdesk",
-            "database": "postgres",
-            "username": "postgres"
         }
     ]
 }
